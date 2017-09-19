@@ -43,7 +43,7 @@ docker run \
   --publish 6006:6006 \
   --rm \
   --name aviata_tf \
-  --workdir /opt \
+  --workdir ${MOUNT_DIR} \
   ${IMAGE_NAME} \
   ${INTERPRETER} ${CONTAINER_SCRIPT}
 
