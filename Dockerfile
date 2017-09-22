@@ -14,6 +14,13 @@ RUN pip install sklearn
 RUN pip install quandl
 RUN pip install matplotlib
 RUN pip install tensorflow
+RUN pip install tweepy
+RUN pip install textblob
+RUN pip install nltk
+
+RUN python -m textblob.download_corpora
+
+RUN pip install jupyter
 
 # Default command
 CMD python
