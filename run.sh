@@ -24,6 +24,7 @@ function run() {
     --env GDK_SCALE \
     --env GDK_DPI_SCALE \
     --publish 6006:6006 \
+    --publish 7007:7007 \
     --rm \
     --name aviata_ai \
     --workdir ${MOUNT_DIR} \
@@ -34,10 +35,21 @@ function run() {
 }
 
 # Determine our run mode if possible
-if [[ $# -gt 1 ]]; then
-  run $@
-elif [[ -z ${SCRIPT_NAME} ]]; then
+if [[ $# -eq 0 ]]; then
   run python
+elif [[ $# -gt 1 ]]; then
+  run $@
+elif [[ ${SCRIPT_NAME} == "help" ]]; then
+  echo "Usage: ./run.sh : run python REPL"
+  echo "       ./run.sh <cmd> <arg> [arg...] : run any valid command within the container"
+  echo "       ./run.sh <help> : prints this help dialog"
+  echo "       ./run.sh <notebook> : runs Jupyter Notebook"
+  echo "       ./run.sh <executable> : any valid executable in the current directory"
+  echo "       ./run.sh <script> : any valid .py or .sh script (with or without extension specified)"
+  echo "       ./run.sh <cmd> : run any valid command within the container"
+elif [[ ${SCRIPT_NAME} == "notebook" ]]; then
+  echo "Running Jupyter Notebook on port 7007"
+  run jupyter notebook --allow-root --no-browser --ip=0.0.0.0 --port=7007
 elif [[ -x ${SCRIPT_NAME} ]]; then
   run ./${SCRIPT_NAME}
 elif [[ -f ${SCRIPT_NAME} ]] && [[ ${SCRIPT_NAME} == *.py ]]; then
