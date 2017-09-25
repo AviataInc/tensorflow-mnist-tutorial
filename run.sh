@@ -1,4 +1,4 @@
-IMAGE_NAME=aviata/hal
+IMAGE_NAME=aviata/tf
 
 SCRIPT_NAME=$1
 INTERPRETER=python
